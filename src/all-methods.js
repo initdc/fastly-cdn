@@ -6,8 +6,6 @@ addEventListener("fetch", (event) => event.respondWith(handleRequest(event)));
 
 async function handleRequest(event) {
   const request = event.request;
-  const method = request.method;
-  if (request.method !== "GET") return MethodNotAllowed(method);
 
   const originUrl = new URL(request.url);
   originUrl.protocol = PROTOCOL;
@@ -22,13 +20,4 @@ async function handleRequest(event) {
 
   // response = new Response(response.body, response);
   return response;
-}
-
-function MethodNotAllowed(method) {
-  return new Response(`Method ${method} not allowed.`, {
-    status: 405,
-    headers: {
-      Allow: "GET",
-    },
-  });
 }

@@ -5,8 +5,6 @@ addEventListener("fetch", (event) => event.respondWith(handleRequest(event)));
 
 async function handleRequest(event) {
   const request = event.request;
-  const method = request.method;
-  if (request.method !== "GET") return MethodNotAllowed(method);
 
   const reqUrl = request.url;
   const cacheKey = new Request(reqUrl, request);
@@ -28,13 +26,4 @@ async function handleRequest(event) {
     event.waitUntil(cache.put(cacheKey, response.clone()));
   }
   return response;
-}
-
-function MethodNotAllowed(method) {
-  return new Response(`Method ${method} not allowed.`, {
-    status: 405,
-    headers: {
-      Allow: "GET",
-    },
-  });
 }
